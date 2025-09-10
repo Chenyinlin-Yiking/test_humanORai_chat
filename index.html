@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交流方式实验研究 - 随机分配</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading-container {
+            text-align: center;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h1 {
+            margin: 0 0 20px 0;
+            font-size: 24px;
+        }
+        p {
+            margin: 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <div class="spinner"></div>
+        <h1>正在为您分配实验组...</h1>
+        <p>请稍候，系统正在随机分配您到实验组</p>
+    </div>
+
+    <script>
+        // 实验组映射：1-8 对应 111, 112, 121, 122, 211, 212, 221, 222
+        const groupMapping = {
+            1: '111',
+            2: '112', 
+            3: '121',
+            4: '122',
+            5: '211',
+            6: '212',
+            7: '221',
+            8: '222'
+        };
+
+        // 随机选择1-8中的一个数字
+        function getRandomGroup() {
+            return Math.floor(Math.random() * 8) + 1;
+        }
+
+        // 重定向到对应的实验组页面
+        function redirectToGroup() {
+            const randomNumber = getRandomGroup();
+            const groupCode = groupMapping[randomNumber];
+            const targetUrl = `${randomNumber}.html`;
+            
+            console.log(`随机分配到组${randomNumber}，对应实验组代码：${groupCode}`);
+            console.log(`重定向到：${targetUrl}`);
+            
+            // 延迟1.5秒后重定向，让用户看到加载动画
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 1500);
+        }
+
+        // 页面加载完成后立即开始重定向
+        document.addEventListener('DOMContentLoaded', function() {
+            redirectToGroup();
+        });
+    </script>
+</body>
+</html> 

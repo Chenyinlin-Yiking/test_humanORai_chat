@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交流方式实验研究 - 组221</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="experiment-header">
+            <h1>交流方式实验研究</h1>
+            <div class="experiment-id">实验ID: <span id="experiment-id"></span></div>
+            <div class="group-info">实验组: 221 (AI-附和-好)</div>
+        </div>
+        
+        <div id="chat-interface" class="chat-interface">
+            <div class="chat-header">
+                <div class="partner-info">
+                    <img id="partner-avatar" src="" alt="头像" class="partner-avatar">
+                    <div class="partner-details">
+                        <h3 id="partner-name"></h3>
+                        <span id="partner-status" class="status"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <!-- 消息将在这里动态添加 -->
+            </div>
+
+            <div class="chat-input-area">
+                <div id="option-buttons" class="option-buttons">
+                    <!-- 选项按钮将在这里动态添加 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="qa_221.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // 强制设置实验组为221
+        window.forceGroup = '221';
+    </script>
+</body>
+</html> 

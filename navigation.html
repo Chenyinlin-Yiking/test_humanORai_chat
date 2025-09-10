@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验组导航 - 交流方式实验研究</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .nav-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .nav-title {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .nav-description {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .group-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .group-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .group-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .group-description {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .group-factors {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .random-link {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 15px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .random-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-container">
+            <h1 class="nav-title">交流方式实验研究</h1>
+            <p class="nav-description">请选择要参与的实验组，或点击随机分配</p>
+            
+            <div class="groups-grid">
+                <a href="group111.html" class="group-card">
+                    <div class="group-number">组 111</div>
+                    <div class="group-description">人 - 强硬 - 好</div>
+                    <div class="group-factors">人类助手，强硬态度，高质量回答</div>
+                </a>
+                
+                <a href="group112.html" class="group-card">
+                    <div class="group-number">组 112</div>
+                    <div class="group-description">人 - 强硬 - 差</div>
+                    <div class="group-factors">人类助手，强硬态度，低质量回答</div>
+                </a>
+                
+                <a href="group121.html" class="group-card">
+                    <div class="group-number">组 121</div>
+                    <div class="group-description">人 - 附和 - 好</div>
+                    <div class="group-factors">人类助手，附和态度，高质量回答</div>
+                </a>
+                
+                <a href="group122.html" class="group-card">
+                    <div class="group-number">组 122</div>
+                    <div class="group-description">人 - 附和 - 差</div>
+                    <div class="group-factors">人类助手，附和态度，低质量回答</div>
+                </a>
+                
+                <a href="group211.html" class="group-card">
+                    <div class="group-number">组 211</div>
+                    <div class="group-description">AI - 强硬 - 好</div>
+                    <div class="group-factors">AI助手，强硬态度，高质量回答</div>
+                </a>
+                
+                <a href="group212.html" class="group-card">
+                    <div class="group-number">组 212</div>
+                    <div class="group-description">AI - 强硬 - 差</div>
+                    <div class="group-factors">AI助手，强硬态度，低质量回答</div>
+                </a>
+                
+                <a href="group221.html" class="group-card">
+                    <div class="group-number">组 221</div>
+                    <div class="group-description">AI - 附和 - 好</div>
+                    <div class="group-factors">AI助手，附和态度，高质量回答</div>
+                </a>
+                
+                <a href="group222.html" class="group-card">
+                    <div class="group-number">组 222</div>
+                    <div class="group-description">AI - 附和 - 差</div>
+                    <div class="group-factors">AI助手，附和态度，低质量回答</div>
+                </a>
+            </div>
+            
+            <a href="index.html" class="random-link">随机分配实验组</a>
+        </div>
+    </div>
+</body>
+</html> 
