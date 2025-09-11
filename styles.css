@@ -260,6 +260,9 @@ body {
     display: none;
 }
 
+.message.sent .message-avatar {
+    display: none;
+}
 
 
 /* 响应式设计 */

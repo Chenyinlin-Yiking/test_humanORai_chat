@@ -167,32 +167,91 @@ window.addEventListener('load', function() {
 
 function startConversation() {
     const config = getConversationConfig(userGroup.group);
-    if (currentStep < config.messages.length) {
-        const message = config.messages[currentStep];
-        if (message.text.trim() !== '') {  // 新增检查：如果text不为空，才显示消息
-            addMessage(config.name, config.avatar, message.text, false);
-        }
-        showOptions(message.options);
-    }
+    advanceConversation();
 }
 
-function addMessage(sender, avatar, text, isUser = false) {
+async function advanceConversation() {
+    const config = getConversationConfig(userGroup.group);
+    while (currentStep < config.messages.length) {
+        const message = config.messages[currentStep];
+        if (message.text.trim() !== '') {
+            await addMessage(config.name, config.avatar, message.text, false);
+        }
+        if (message.options && message.options.length > 0) {
+            showOptions(message.options);
+            return; // 等待用户输入
+        }
+        currentStep++;
+    }
+    // 如果到达末尾，结束对话
+    endConversation();
+}
+
+async function addMessage(sender, avatar, text, isUser = false) {
     const messagesContainer = document.getElementById('chat-messages');
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${isUser ? 'sent' : 'received'}`;
     
     const time = new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
     
-    messageDiv.innerHTML = `
-        <img src="${avatar}" alt="${sender}" class="message-avatar">
-        <div class="message-content">
-            <div>${text}</div>
-            <div class="message-time">${time}</div>
-        </div>
-    `;
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'message-content';
+    
+    const textDiv = document.createElement('div');
+    contentDiv.appendChild(textDiv);
+    
+    const timeDiv = document.createElement('div');
+    timeDiv.className = 'message-time';
+    timeDiv.textContent = time;
+    contentDiv.appendChild(timeDiv);
+    
+    const avatarImg = document.createElement('img');
+    avatarImg.src = avatar;
+    avatarImg.alt = sender;
+    avatarImg.className = 'message-avatar';
+    
+    if (isUser) {
+        messageDiv.appendChild(contentDiv);
+        messageDiv.appendChild(avatarImg);
+    } else {
+        messageDiv.appendChild(avatarImg);
+        messageDiv.appendChild(contentDiv);
+    }
     
     messagesContainer.appendChild(messageDiv);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    
+    // 处理换行：将\n替换为<br>标签字符串
+    const processedText = text.replace(/\n/g, '<br>');
+    
+    return new Promise((resolve) => {
+        if (!isUser) {
+            // 打字机效果（营养师消息）
+            textDiv.innerHTML = '';
+            let i = 0;
+            const typingInterval = setInterval(() => {
+                if (i < processedText.length) {
+                    // 检查是否是<br>标签开头
+                    if (processedText.substring(i, i+4) === '<br>') {
+                        const br = document.createElement('br');
+                        textDiv.appendChild(br);
+                        i += 4;  // 跳过<br>的4个字符
+                    } else {
+                        textDiv.innerHTML += processedText.charAt(i);
+                        i++;
+                    }
+                } else {
+                    clearInterval(typingInterval);
+                    resolve();  // 打字完成
+                }
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 50);  // 每个字间隔50ms
+        } else {
+            // 用户消息立即显示
+            textDiv.innerHTML = processedText;
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            resolve();  // 立即完成
+        }
+    });
     
     conversationHistory.push({
         sender: isUser ? 'user' : 'partner',
@@ -216,6 +275,9 @@ function showOptions(options) {
 }
 
 function selectOption(selectedText, optionIndex) {
+    const optionsContainer = document.getElementById('option-buttons');
+    optionsContainer.innerHTML = '';  // 清空选项按钮
+    
     const userAvatar = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face';
     addMessage('我', userAvatar, selectedText, true);
     
@@ -229,20 +291,9 @@ function selectOption(selectedText, optionIndex) {
     
     currentStep++;
     
-    const config = getConversationConfig(userGroup.group);
-    if (currentStep < config.messages.length) {
-        setTimeout(() => {
-            const nextMessage = config.messages[currentStep];
-            if (nextMessage.text.trim() !== '') {  // 新增检查：如果text不为空，才显示消息
-                addMessage(config.name, config.avatar, nextMessage.text, false);
-            }
-            showOptions(nextMessage.options);
-        }, 1000);
-    } else {
-        setTimeout(() => {
-            endConversation();
-        }, 1000);
-    }
+    setTimeout(() => {
+        advanceConversation();
+    }, 1000);
 }
 
 function endConversation() {
